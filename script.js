@@ -6,7 +6,6 @@ var settings = {
     submitUrl: "https://v2.jokeapi.dev/submit",
     defaultLang: "en",
     formatVersion: 3,
-    contributorsObject: JSON.parse('[{"name":"Liam Townsley","email":"contact@liamtownsley.me","url":"https://liamtownsley.me","contributions":["Fixed grammar mistakes","Removed dead dependent"]},{"name":"ThatCopy","url":"https://github.com/ThatCopy","contributions":["Added Czech translation","Fixed grammar mistakes"]},{"name":"Sahithyan Kandathasan","email":"sahithyan2701@gmail.com","contributions":["Added changelog in Markdown format"]}]'),
     categoryAliasesObject: JSON.parse('{"Miscellaneous":"Misc","Coding":"Programming","Development":"Programming","Halloween":"Spooky"}')
 };
 
