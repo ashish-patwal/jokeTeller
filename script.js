@@ -105,13 +105,6 @@ function buildURL()
         }
     }
 
-
-    //#SECTION language
-    var langCode = gebid("lcodeSelect").value || settings.defaultLang;
-    if(langCode != settings.defaultLang)
-        queryParams.push("lang=" + langCode);
-
-
     //#SECTION flags
     var flagElems = [gebid("blf-cb1"), gebid("blf-cb2"), gebid("blf-cb3"), gebid("blf-cb4"), gebid("blf-cb5"), gebid("blf-cb6")];
     var flagNames = JSON.parse('["nsfw","religious","political","racist","sexist","explicit"]');
