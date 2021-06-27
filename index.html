@@ -67,19 +67,6 @@
             </tr>
             <tr>
                 <td>
-                    Select response format:
-                </td>
-                <td>
-                    <div class="multiselect noselect">
-                        <input type="radio" id="fmt-cb1" name="formatRadio" value="json" onchange="reRender()"><label for="fmt-cb1">default (json)</label>
-                        <input type="radio" id="fmt-cb2" name="formatRadio" value="xml" onchange="reRender()"><label for="fmt-cb2">xml</label>
-                        <input type="radio" id="fmt-cb3" name="formatRadio" value="yaml" onchange="reRender()"><label for="fmt-cb3">yaml</label>
-                        <input type="radio" id="fmt-cb4" name="formatRadio" value="txt" onchange="reRender()"><label for="fmt-cb4">plain text</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
                     Select at least one joke type:
                 </td>
                 <td>
@@ -96,28 +83,6 @@
                 <td>
                     <div class="multiselect noselect">
                         <input type="text" id="searchStringInput" oninput="reRender()" placeholder="(optional)">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Search for a joke in this ID range:
-                </td>
-                <td>
-                    <div class="multiselect noselect" id="idRangeWrapper">
-                        (optional)&nbsp;&nbsp;&nbsp;
-                        From: <input type="number" id="idRangeInputFrom" value="0" min="0" step="1" oninput="reRender()" max="342">
-                        To: <input type="number" id="idRangeInputTo" value="342" min="0" step="1" oninput="reRender()" max="342">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Amount of jokes:
-                </td>
-                <td>
-                    <div class="multiselect noselect" id="jokeAmountWrapper">
-                        <input type="number" id="jokesAmountInput" value="1" min="1" step="1" oninput="reRender()" max="10">
                     </div>
                 </td>
             </tr>

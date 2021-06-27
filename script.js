@@ -10,6 +10,8 @@ var settings = {
     categoryAliasesObject: JSON.parse('{"Miscellaneous":"Misc","Coding":"Programming","Development":"Programming","Halloween":"Spooky"}')
 };
 
+var tryItURL = "";
+
 function gebid(id){return document.getElementById(id);}
 var maxJokeIdRange = parseInt("342");
 
@@ -57,82 +59,6 @@ function reRender(langChanged)
     else
     {
         gebid("categoryWrapper").style.borderColor = "initial";
-    }
-
-
-    //#SECTION format
-    if(!gebid("typ-cb1").checked && !gebid("typ-cb2").checked)
-    {
-        allOk = false;
-        gebid("typeSelectWrapper").style.borderColor = "red";
-    }  
-    else
-    {
-        gebid("typeSelectWrapper").style.borderColor = "initial";
-    }
-
-
-    //#SECTION id range
-    if(langChanged === true)
-    {
-        console.warn("langchanged")
-
-        var langCode = gebid("lcodeSelect").value;
-
-        if(idRanges[langCode])
-        {
-            var maxRange = parseInt(idRanges[langCode][1]);
-
-            gebid("idRangeInputTo").max = maxRange;
-            gebid("idRangeInputTo").value = maxRange;
-
-            maxJokeIdRange = maxRange;
-        }
-        else
-        {
-            gebid("idRangeInputTo").max = parseInt("342");
-
-            maxJokeIdRange = parseInt("342");
-        }
-    }
-
-    var numRegex = /^[0-9]+$/gm;
-    var fromVal = gebid("idRangeInputFrom").value;
-    var toVal = gebid("idRangeInputTo").value;
-    var fromValInt = parseInt(fromVal);
-    var toValInt = parseInt(toVal);
-    var outOfRange = (fromValInt < 0 || toValInt > maxJokeIdRange);
-    var notNumber = ((fromVal.match(numRegex) == null) || (toVal.match(numRegex) == null));
-
-    if(outOfRange || notNumber || fromValInt > toValInt)
-    {
-        allOk = false;
-        gebid("idRangeWrapper").style.borderColor = "red";
-    }
-    else
-    {
-        gebid("idRangeWrapper").style.borderColor = "initial";
-    }
-
-    var jokesAmount = parseInt(gebid("jokesAmountInput").value);
-
-    if(jokesAmount > parseInt("10") || jokesAmount < 1 || isNaN(jokesAmount))
-    {
-        allOk = false;
-        gebid("jokeAmountWrapper").style.borderColor = "red";
-    }
-    else
-    {
-        gebid("jokeAmountWrapper").style.borderColor = "initial";
-    }
-
-    if(allOk)
-    {
-        tryItOk = true;
-    }
-    else
-    {
-        tryItOk = false;
     }
 
     buildURL();
@@ -203,16 +129,6 @@ function buildURL()
     }
 
 
-    //#SECTION format
-    var formatElems = [gebid("fmt-cb1"), gebid("fmt-cb2"), gebid("fmt-cb3"), gebid("fmt-cb4")];
-    formatElems.forEach(function(el) {
-        if(el.checked && el.value != settings.defaultFormat)
-        {
-            queryParams.push("format=" + el.value);
-        }
-    });
-
-
     //#SECTION type
     var singleJoke = gebid("typ-cb1").checked;
     var twopartJoke = gebid("typ-cb2").checked;
@@ -234,31 +150,6 @@ function buildURL()
     if(sstr)
     {
         queryParams.push("contains=" + encodeURIComponent(sstr));
-    }
-
-
-    //#SECTION id range
-    var range = [parseInt(gebid("idRangeInputFrom").value), parseInt(gebid("idRangeInputTo").value)];
-    if(!isNaN(range[0]) && !isNaN(range[1]) && range[0] >= 0 && range[1] <= maxJokeIdRange && range[1] >= range[0])
-    {
-        if(range[0] == range[1] && range[0] >= 0 && range[0] <= maxJokeIdRange)
-        {
-            // Use "x" format
-            queryParams.push("idRange=" + range[0]);
-        }
-        else if(range[0] != 0 || range[1] != maxJokeIdRange)
-        {
-            // Use "x-y" format
-            queryParams.push("idRange=" + range[0] + "-" + range[1]);
-        }
-    }
-
-
-    //#SECTION amount
-    var jokeAmount = parseInt(gebid("jokesAmountInput").value);
-    if(jokeAmount != 1 && !isNaN(jokeAmount) && jokeAmount > 0 && jokeAmount <= parseInt("10"))
-    {
-        queryParams.push("amount=" + jokeAmount);
     }
 
 
