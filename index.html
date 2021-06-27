@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joke Teller</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <button id="button">Tell Me A Joke</button>
+        <audio id="audio" controls hidden></audio>
+    </div>
+    <div id="options">
+        <table>
+            <tr>
+                <td>
+                    Select categories :
+                </td>
+                <td>
+                    <div class="multiselect noselect" id="categoryWrapper">
+                        <div>
+                            <input type="radio" name="catSelect" value="any" id="cat-radio1" onchange="reRender()"><label for="cat-radio1">Any</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="catSelect" value="multi" id="cat-radio2" onchange="reRender()"><label for="cat-radio2">Custom:</label>
+                            <span id="catSelectMulti">
+                                <input type="checkbox" id="cat-cb1" onchange="reRender()" disabled><label for="cat-cb1">Programming</label>
+                                <input type="checkbox" id="cat-cb2" onchange="reRender()" disabled><label for="cat-cb2">Misc</label>
+                                <input type="checkbox" id="cat-cb3" onchange="reRender()" disabled><label for="cat-cb3">Dark</label>
+                                <input type="checkbox" id="cat-cb4" onchange="reRender()" disabled><label for="cat-cb4">Pun</label>
+                                <input type="checkbox" id="cat-cb5" onchange="reRender()" disabled><label for="cat-cb5">Spooky</label>
+                                <input type="checkbox" id="cat-cb6" onchange="reRender()" disabled><label for="cat-cb6">Christmas</label>
+                            </span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Select language :
+                </td>
+                <td>
+                    <div class="multiselect noselect">
+                        <select id="lcodeSelect" class="appendLangOpts"></select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Select flags to blacklist:
+                </td>
+                <td>
+                    <div class="multiselect noselect">
+                        (optional)&nbsp;&nbsp;&nbsp;
+                        <input type="checkbox" id="blf-cb1" onchange="reRender()"><label for="blf-cb1">nsfw</label>
+                        <input type="checkbox" id="blf-cb2" onchange="reRender()"><label for="blf-cb2">religious</label>
+                        <input type="checkbox" id="blf-cb3" onchange="reRender()"><label for="blf-cb3">political</label>
+                        <input type="checkbox" id="blf-cb4" onchange="reRender()"><label for="blf-cb4">racist</label>
+                        <input type="checkbox" id="blf-cb5" onchange="reRender()"><label for="blf-cb5">sexist</label>
+                        <input type="checkbox" id="blf-cb6" onchange="reRender()"><label for="blf-cb6">explicit</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Select response format:
+                </td>
+                <td>
+                    <div class="multiselect noselect">
+                        <input type="radio" id="fmt-cb1" name="formatRadio" value="json" onchange="reRender()"><label for="fmt-cb1">default (json)</label>
+                        <input type="radio" id="fmt-cb2" name="formatRadio" value="xml" onchange="reRender()"><label for="fmt-cb2">xml</label>
+                        <input type="radio" id="fmt-cb3" name="formatRadio" value="yaml" onchange="reRender()"><label for="fmt-cb3">yaml</label>
+                        <input type="radio" id="fmt-cb4" name="formatRadio" value="txt" onchange="reRender()"><label for="fmt-cb4">plain text</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Select at least one joke type:
+                </td>
+                <td>
+                    <div class="multiselect noselect" id="typeSelectWrapper">
+                        <input type="checkbox" id="typ-cb1" onchange="reRender()"><label for="typ-cb1">single</label>
+                        <input type="checkbox" id="typ-cb2" onchange="reRender()"><label for="typ-cb2">twopart</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Search for a joke that<br>contains this search string:
+                </td>
+                <td>
+                    <div class="multiselect noselect">
+                        <input type="text" id="searchStringInput" oninput="reRender()" placeholder="(optional)">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Search for a joke in this ID range:
+                </td>
+                <td>
+                    <div class="multiselect noselect" id="idRangeWrapper">
+                        (optional)&nbsp;&nbsp;&nbsp;
+                        From: <input type="number" id="idRangeInputFrom" value="0" min="0" step="1" oninput="reRender()" max="342">
+                        To: <input type="number" id="idRangeInputTo" value="342" min="0" step="1" oninput="reRender()" max="342">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Amount of jokes:
+                </td>
+                <td>
+                    <div class="multiselect noselect" id="jokeAmountWrapper">
+                        <input type="number" id="jokesAmountInput" value="1" min="1" step="1" oninput="reRender()" max="10">
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br>    
+        <br>
+        <div id="urlBuilderWrapper" class="flexItem">
+            URL: <span id="urlBuilderUrl">(Loading...)</span><br>
+      </div>
+    </div>
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+</html>
